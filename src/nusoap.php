@@ -4696,14 +4696,14 @@ class nusoap_server extends nusoap_base
             $this->wsdl->schemas[$schemaTargetNamespace][0]->schemaInfo['elementFormDefault'] = 'qualified';
         }
         $this->wsdl->schemas[$schemaTargetNamespace][0]->schemaTargetNamespace = $schemaTargetNamespace;
-        $this->wsdl->schemas[$schemaTargetNamespace][0]->imports['http://schemas.xmlsoap.org/soap/encoding/'][0] = array('location' => '', 'loaded' => true);
-        $this->wsdl->schemas[$schemaTargetNamespace][0]->imports['http://schemas.xmlsoap.org/wsdl/'][0] = array('location' => '', 'loaded' => true);
+        // $this->wsdl->schemas[$schemaTargetNamespace][0]->imports['http://schemas.xmlsoap.org/soap/encoding/'][0] = array('location' => '', 'loaded' => true);
+        // $this->wsdl->schemas[$schemaTargetNamespace][0]->imports['http://schemas.xmlsoap.org/wsdl/'][0] = array('location' => '', 'loaded' => true);
         $this->wsdl->bindings[$serviceName . 'Binding'] = array(
             'name' => $serviceName . 'Binding',
             'style' => $style,
             'transport' => $transport,
-            'portType' => $serviceName . 'PortType');
-        $this->wsdl->ports[$serviceName . 'Port'] = array(
+            'portType' => 'NotificacionRecaudo');
+        $this->wsdl->ports['NotificacionRecaudo'] = array(
             'binding' => $serviceName . 'Binding',
             'location' => $endpoint,
             'bindingType' => 'http://schemas.xmlsoap.org/wsdl/soap/');
@@ -6612,16 +6612,16 @@ class wsdl extends nusoap_base
             foreach ($in as $n => $t) {
                 $elements[$n] = array('name' => $n, 'type' => $t, 'form' => 'unqualified');
             }
-            $this->addComplexType($name . 'RequestType', 'complexType', 'struct', 'all', '', $elements);
-            $this->addElement(array('name' => $name, 'type' => $name . 'RequestType'));
+            $this->addComplexType($name . '', 'complexType', 'struct', 'sequence', '', $elements);
+            $this->addElement(array('name' => $name, 'type' => $name . ''));
             $in = array('parameters' => 'tns:' . $name . '^');
 
             $elements = array();
             foreach ($out as $n => $t) {
                 $elements[$n] = array('name' => $n, 'type' => $t, 'form' => 'unqualified');
             }
-            $this->addComplexType($name . 'ResponseType', 'complexType', 'struct', 'all', '', $elements);
-            $this->addElement(array('name' => $name . 'Response', 'type' => $name . 'ResponseType', 'form' => 'qualified'));
+            $this->addComplexType($name . 'Response', 'complexType', 'struct', 'sequence', '', $elements);
+            $this->addElement(array('name' => $name . 'Response', 'type' => $name . 'Response', 'form' => 'qualified'));
             $out = array('parameters' => 'tns:' . $name . 'Response' . '^');
         }
 
